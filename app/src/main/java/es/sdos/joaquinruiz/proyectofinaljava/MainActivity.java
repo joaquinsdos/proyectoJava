@@ -12,6 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import es.sdos.joaquinruiz.proyectofinaljava.adapter.ProductAdapter;
@@ -92,6 +94,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void actualizarLista() {
        // lista.sortBy { it.listo }
+
+        Collections.sort(lista, new Comparator<Product>() {
+            @Override
+            public int compare(Product o1, Product o2) {
+                return o1.getListo().compareTo(o2.getListo());
+            }
+        });
         adapter.notifyDataSetChanged();
     }
 }

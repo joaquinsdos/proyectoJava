@@ -10,6 +10,8 @@ import android.widget.CompoundButton;
 import android.widget.ImageButton;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import es.sdos.joaquinruiz.proyectofinaljava.R;
@@ -69,7 +71,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
                     //TODO - ordenar lista por listo
 
-//                    list.get(1);
+                    Collections.sort(lista, new Comparator<Product>() {
+                        @Override
+                        public int compare(Product o1, Product o2) {
+                            return o1.getListo().compareTo(o2.getListo());
+                        }
+                    });
+
                     productAdapter.notifyDataSetChanged();
                 }
             });
