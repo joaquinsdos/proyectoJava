@@ -11,10 +11,10 @@ import android.widget.ImageButton;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import es.sdos.joaquinruiz.proyectofinaljava.R;
+import es.sdos.joaquinruiz.proyectofinaljava.comparator.ListoCoparator;
 import es.sdos.joaquinruiz.proyectofinaljava.model.Product;
 import io.realm.Realm;
 
@@ -57,27 +57,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
         ViewHolder(View itemView) {
             super(itemView);
-
             checkBox = itemView.findViewById(R.id.list__checkbox__comprado);
             deleteButton = itemView.findViewById(R.id.list__btn__delete);
-
-
         }
 
         void bind(final List<Product> list, final ProductAdapter productAdapter) {
             checkBox.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-                    //TODO - ordenar lista por listo
-
-                    Collections.sort(lista, new Comparator<Product>() {
-                        @Override
-                        public int compare(Product o1, Product o2) {
-                            return o1.getListo().compareTo(o2.getListo());
-                        }
-                    });
-
+                    Collections.sort(lista, new ListoCoparator());
                     productAdapter.notifyDataSetChanged();
                 }
             });
@@ -94,7 +82,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
             checkBox.setChecked(lista.get(getLayoutPosition()).getListo());
             checkBox.setText(lista.get(getLayoutPosition()).getName());
-
             deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

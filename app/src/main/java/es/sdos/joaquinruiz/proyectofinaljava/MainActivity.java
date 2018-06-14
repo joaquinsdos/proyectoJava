@@ -17,6 +17,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import es.sdos.joaquinruiz.proyectofinaljava.adapter.ProductAdapter;
+import es.sdos.joaquinruiz.proyectofinaljava.comparator.ListoCoparator;
 import es.sdos.joaquinruiz.proyectofinaljava.model.Product;
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -32,11 +33,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         realm = Realm.getDefaultInstance();
         RealmResults<Product> results = realm.where(Product.class).findAll();
         lista.addAll(results);
-
         adapter.setLista(lista);
         setupRecycler();
         actualizarLista();
@@ -80,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
                         realm.commitTransaction();
                         actualizarLista();
                         dialog.dismiss();
-
                     }
                 });
         builder.create().show();
@@ -93,14 +91,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void actualizarLista() {
-       // lista.sortBy { it.listo }
-
-        Collections.sort(lista, new Comparator<Product>() {
-            @Override
-            public int compare(Product o1, Product o2) {
-                return o1.getListo().compareTo(o2.getListo());
-            }
-        });
+        Collections.sort(lista, new ListoCoparator());
         adapter.notifyDataSetChanged();
     }
 }
