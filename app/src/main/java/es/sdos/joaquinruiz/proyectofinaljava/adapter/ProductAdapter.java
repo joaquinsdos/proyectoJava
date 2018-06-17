@@ -14,7 +14,7 @@ import java.util.Collections;
 import java.util.List;
 
 import es.sdos.joaquinruiz.proyectofinaljava.R;
-import es.sdos.joaquinruiz.proyectofinaljava.comparator.ListoCoparator;
+import es.sdos.joaquinruiz.proyectofinaljava.comparator.ListoComparator;
 import es.sdos.joaquinruiz.proyectofinaljava.model.Product;
 import io.realm.Realm;
 
@@ -65,7 +65,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             checkBox.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Collections.sort(lista, new ListoCoparator());
+                    Collections.sort(lista, new ListoComparator());
                     productAdapter.notifyDataSetChanged();
                 }
             });

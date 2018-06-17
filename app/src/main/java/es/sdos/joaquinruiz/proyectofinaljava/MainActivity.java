@@ -13,18 +13,17 @@ import android.view.View;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import es.sdos.joaquinruiz.proyectofinaljava.adapter.ProductAdapter;
-import es.sdos.joaquinruiz.proyectofinaljava.comparator.ListoCoparator;
+import es.sdos.joaquinruiz.proyectofinaljava.comparator.ListoComparator;
 import es.sdos.joaquinruiz.proyectofinaljava.model.Product;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
 public class MainActivity extends AppCompatActivity {
 
-    private List<Product> lista = new ArrayList<>();
+    private final List<Product> lista = new ArrayList<>();
     private ProductAdapter adapter = new ProductAdapter();
     private Realm realm;
     private RecyclerView main__list__products;
@@ -37,8 +36,10 @@ public class MainActivity extends AppCompatActivity {
         RealmResults<Product> results = realm.where(Product.class).findAll();
         lista.addAll(results);
         adapter.setLista(lista);
-        setupRecycler();
-        actualizarLista();
+        main__list__products = findViewById(R.id.main__list__products);
+        main__list__products.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        main__list__products.setAdapter(adapter);
+        reloadList();
     }
 
     @Override
@@ -77,21 +78,16 @@ public class MainActivity extends AppCompatActivity {
                         lista.add(0, product);
                         realm.copyToRealm(product);
                         realm.commitTransaction();
-                        actualizarLista();
+                        reloadList();
                         dialog.dismiss();
                     }
                 });
         builder.create().show();
     }
 
-    private void setupRecycler() {
-        main__list__products = findViewById(R.id.main__list__products);
-        main__list__products.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        main__list__products.setAdapter(adapter);
-    }
 
-    private void actualizarLista() {
-        Collections.sort(lista, new ListoCoparator());
+    private void reloadList() {
+        Collections.sort(lista, new ListoComparator());
         adapter.notifyDataSetChanged();
     }
 }

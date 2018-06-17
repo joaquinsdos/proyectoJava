@@ -1,7 +1,5 @@
 package es.sdos.joaquinruiz.proyectofinaljava.model;
 
-import java.util.Objects;
-
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -12,14 +10,10 @@ public class Product extends RealmObject {
     private String name;
     private Boolean listo;
 
-    public Product(Integer id, String name, Boolean listo) {
-        this.id = id;
-        this.name = name;
-        this.listo = listo;
-    }
-
     public Product() {
-        this.listo=false;
+        this.id = 0;
+        this.name = "";
+        this.listo = false;
     }
 
     public Integer getId() {
